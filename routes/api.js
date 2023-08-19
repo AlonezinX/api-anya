@@ -28,7 +28,7 @@ var router  = express.Router();
 
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
-var { styletext } = require(__path + '/apis/styletext.js');
+var { styletext } = require(__path + '/lib/listdl');
 
 precisos = {
     digitarapikey: {
