@@ -83,8 +83,8 @@ router.get('/styletext', async(req, res, next) => {
   const apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  var text = shortText(text1, 10000)  
-  styletext(text).then((data) => {
+  
+  styletext(text1).then((data) => {
       res.json({
     status: true,
 	creator: `${creator}`,
