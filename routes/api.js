@@ -28,7 +28,7 @@ var router  = express.Router();
 
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
-var { styletext, wikiSearch} = require(__path + '/apis/styletext.js');
+var { styletext, wikiSearch } = require('/apis/styletext.js');
 
 precisos = {
     digitarapikey: {
@@ -71,10 +71,11 @@ router.get('/styletext', async(req, res, next) => {
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
   styletext(texto1).then((data) => {
+ var result = data;
       res.json({
     status: true,
 	creator: `${creator}`,
-	result: data
+	result: result
       })
     })
     } else {
@@ -88,11 +89,11 @@ router.get('/wikipedia', async(req, res, next) => {
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
   wikiSearch(text).then((data) => {
-      var resultado = data[0].wiki;
+      var resultad = data[0].wiki;
       res.json({
     status: true,
 	creator: `${creator}`,
-	result: resultado
+	result: resultad
       })
     })
     } else {
