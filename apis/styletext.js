@@ -36,4 +36,18 @@ function styletext(teks) {
     })
 }
 
+function wikiSearch(query) = {
+const res = await axios.get(`https://pt.m.wikipedia.org/wiki/${query}`)
+const $ = cheerio.load(res.data)
+const hasil = []
+let wiki = $('#mf-section-0').find('p').text()
+let thumb = $('#mf-section-0').find('div > div > a > img').attr('src')
+thumb = thumb ? thumb : '//pngimg.com/uploads/wikipedia/wikipedia_PNG35.png'
+thumb = 'https:' + thumb
+let titulo = $('h1#section_0').text()
+hasil.push({ wiki, thumb, titulo })
+return hasil
+}
+
 module.exports.styletext = styletext
+module.exports.wikiSearch + wikiSearch
