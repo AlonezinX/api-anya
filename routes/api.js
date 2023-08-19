@@ -95,22 +95,6 @@ router.get('/styletext', async(req, res, next) => {
     }
 });
 
-router.get('/wikipedia', async(req, res, next) => {
-  const text = req.query.texto;
-  const apikey = req.query.apikey;
-  if(!apikey) return res.json(precisos.digitarapikey)
-  if(listkey.includes(apikey)){
-  wikiSearch(text).then((data) => {
-      res.json({
-    status: true,
-	creator: `${creator}`,
-	resultado: data[0].wiki
-      })
-    })
-    } else {
-    	res.sendFile(__path + '/views/key.html')
-    }
-});
 router.get('/tiktok', async(req, res, next) => {
   var apikey = req.query.apikey;
    var url = req.query.url;  
