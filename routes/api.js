@@ -23,7 +23,6 @@ var fetch = require('node-fetch');
 var util = require('util');
 var cheerio = require('cheerio');
 var request = require('request');
-const { shortText } = require("limit-text-js")
 var router  = express.Router();
 
 
@@ -69,10 +68,9 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 router.get('/styletext', async(req, res, next) => {
   const text1 = req.query.texto;
   const apikey = req.query.apikey; 
-var textt = shortText(text1, 10000)  
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  styletext(textt).then((data) => {
+  styletext(text1).then((data) => {
       res.json({
     status: true,
 	creator: `${creator}`,
