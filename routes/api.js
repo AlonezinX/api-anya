@@ -28,7 +28,7 @@ var router  = express.Router();
 
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
-var { styletext } = require(__path + '/lib/styletext.js');
+var { styletext } = require(__path + '/apis/styletext.js');
 
 precisos = {
     digitarapikey: {
@@ -70,7 +70,7 @@ router.get('/styletext', async(req, res, next) => {
   const apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  await styletext(teks).then((data) => {
+  styletext(teks).then((data) => {
       res.json({
     status: true,
 	creator: `${creator}`,
