@@ -4,7 +4,7 @@ __path = process.cwd()
 var express = require('express');
 var db = require(__path + '/database/db');
 try {
-var kuhong = db.get('ojan');
+var kuhong = db.get('alone');
 } catch (e) {
 	console.log('Bem vindo ao anya-api!') 
 }
@@ -21,12 +21,14 @@ var fs = require('fs');
 var FormData = require('form-data');
 var fetch = require('node-fetch');
 var util = require('util');
+var cheerio = require('cheerio');
+var request = require('request');
 var router  = express.Router();
 
 
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
-var { styletext, wikiSearch } = require(__path + '/lib/api/apidl.js'); 
+var { styletext, wikiSearch } = require('../lib/api/apidl.js'); 
 
 precisos = {
     digitarapikey: {
