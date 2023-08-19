@@ -70,7 +70,7 @@ router.get('/styletext', async(req, res, next) => {
   const apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  await styletext(texto1).then((data) => {
+  styletext(texto1).then((data) => {
       res.json({
     status: true,
 	creator: `${creator}`,
@@ -88,7 +88,7 @@ router.get('/wikipedia', async(req, res, next) => {
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
   wikiSearch(text).then((data) => {
-      var resultado = data[0].wiki
+      var resultado = data[0].wiki;
       res.json({
     status: true,
 	creator: `${creator}`,
