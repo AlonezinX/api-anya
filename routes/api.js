@@ -78,18 +78,19 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 }        	    	 	
 })
 router.get('/styletext', async(req, res, next) => {
-  const text1 = req.query.texto;
+  const teks = req.query.texto;
   const apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
   
-  styletext(text1).then((data) => {
+  styletext(teks).then((data) => {
       res.json({
     status: true,
 	creator: `${creator}`,
 	result: data
       })
     })
+    .catch((err) => console.log(err));
     } else {
     	res.sendFile(__path + '/views/key.html')
     }
