@@ -21,7 +21,7 @@ var fs = require('fs');
 var FormData = require('form-data');
 var fetch = require('node-fetch');
 var util = require('util');
-const alip = require("../lib/listdl");
+var alip = require("../lib/listdl");
 var router  = express.Router();
 
 
