@@ -19,6 +19,7 @@ const listkey = ["nielzinxyz"];
 //*****//
 var fs = require('fs');
 var FormData = require('form-data');
+const { shortText } = require("limit-text-js")
 var fetch = require('node-fetch');
 var util = require('util');
 var cheerio = require('cheerio');
@@ -29,7 +30,6 @@ var router  = express.Router();
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
 
-
 precisos = {
     digitarapikey: {
         criador : `${criador}`,
@@ -37,9 +37,9 @@ precisos = {
     }
 }
 
-function styletext(text) {
+function styletext(teks) {
     return new Promise((resolve, reject) => {
-        axios.get('http://qaz.wtf/u/convert.cgi?text='+text)
+        axios.get('http://qaz.wtf/u/convert.cgi?text='+teks)
         .then(({ data }) => {
             let $ = cheerio.load(data)
             let hasil = []
@@ -79,10 +79,11 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 }        	    	 	
 })
 router.get('/styletext', async(req, res, next) => {
-  const text = req.query.texto;
+  const text1 = req.query.texto;
   const apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
+  var text = shortText(text1, 10000)  
   styletext(text).then((data) => {
       res.json({
     status: true,
