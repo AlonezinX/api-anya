@@ -82,15 +82,13 @@ router.get('/styletext', async(req, res, next) => {
   const apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  
-  styletext(teks).then((data) => {
+  await styletext(teks).then((data) => {
       res.json({
     status: true,
 	creator: `${creator}`,
 	result: data
       })
     })
-    .catch((err) => console.log(err));
     } else {
     	res.sendFile(__path + '/views/key.html')
     }
