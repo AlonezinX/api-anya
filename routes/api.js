@@ -26,10 +26,9 @@ var request = require('request');
 var router  = express.Router();
 
 
-
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
-var { styletext, wikiSearch } = require(__path + '/apis/styletext.js');
+var { styletext, wikiSearch} = require(__path + '/apis/styletext.js');
 
 precisos = {
     digitarapikey: {
@@ -67,15 +66,33 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 }        	    	 	
 })
 router.get('/styletext', async(req, res, next) => {
-  const text1 = req.query.texto;
-  const apikey = req.query.apikey; 
+  const texto1 = req.query.texto;
+  const apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  styletext(text1).then((data) => {
+  await styletext(texto1).then((data) => {
       res.json({
     status: true,
 	creator: `${creator}`,
 	result: data
+      })
+    })
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
+
+router.get('/wikipedia', async(req, res, next) => {
+  const text = req.query.texto;
+  const apikey = req.query.apikey;
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+  wikiSearch(text).then((data) => {
+      var resultado = data[0].wiki
+      res.json({
+    status: true,
+	creator: `${creator}`,
+	result: resultado
       })
     })
     } else {
