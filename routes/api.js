@@ -23,16 +23,36 @@ var fetch = require('node-fetch');
 var util = require('util');
 var router  = express.Router();
 
-var {
-  soundcloud
-} = require("./../lib/api/listdl");
-
-var {
-  textpro
-} = require("./../lib/api/textpro");
 
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
+
+function parseFileSize(size) {
+    return parseFloat(size) * (/GB/i.test(size)
+        ? 1000000
+        : /MB/i.test(size)
+            ? 1000
+            : /KB/i.test(size)
+                ? 1
+                : /bytes?/i.test(size)
+                    ? 0.001
+                    : /B/i.test(size)
+                        ? 0.1
+                        : 0);
+}
+function styletext(teks) {
+    return new Promise((resolve, reject) => {
+        axios.get('http://qaz.wtf/u/convert.cgi?text='+teks)
+        .then(({ data }) => {
+            let $ = cheerio.load(data)
+            let hasil = []
+            $('table > tbody > tr').each(function (a, b) {
+                hasil.push({ name: $(b).find('td:nth-child(1) > h6 > a').text(), result: $(b).find('td:nth-child(2)').text().trim() })
+            }),
+            resolve(hasil)
+        })
+    })
+}
 
 precisos = {
     digitarapikey: {
@@ -89,16 +109,16 @@ router.get('/soundcloud', async(req, res, next) => {
     	res.sendFile(__path + '/views/key.html')
     }
 });
-router.get('/pencil', async(req, res, next) => {
-  const text1 = req.query.texto;
+router.get('/styletext', async(req, res, next) => {
+  const text = req.query.texto;
   const apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  textpro("https://textpro.me/create-blackpink-logo-style-online-1001.html", [text1])
-    .then((result) => {
+  styletext(text).then((data) => {
       res.json({
-       res.set({'Content-Type': 'image/png'})
-       res.send(result)
+    status: true,
+	creator: `${creator}`,
+	result: data
       })
     })
     .catch((error) => {
