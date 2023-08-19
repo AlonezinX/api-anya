@@ -40,7 +40,7 @@ function parseFileSize(size) {
                         ? 0.1
                         : 0);
 }
-function styletext(teks) {
+function styletext(text) {
     return new Promise((resolve, reject) => {
         axios.get('http://qaz.wtf/u/convert.cgi?text='+teks)
         .then(({ data }) => {
@@ -52,6 +52,18 @@ function styletext(teks) {
             resolve(hasil)
         })
     })
+}
+const wikiSearch = async (query) => {
+const res = await axios.get(`https://pt.m.wikipedia.org/wiki/${query}`)
+const $ = cheerio.load(res.data)
+const hasil = []
+let wiki = $('#mf-section-0').find('p').text()
+let thumb = $('#mf-section-0').find('div > div > a > img').attr('src')
+thumb = thumb ? thumb : '//pngimg.com/uploads/wikipedia/wikipedia_PNG35.png'
+thumb = 'https:' + thumb
+let titulo = $('h1#section_0').text()
+hasil.push({ wiki, thumb, titulo })
+return hasil
 }
 
 precisos = {
@@ -129,6 +141,25 @@ router.get('/styletext', async(req, res, next) => {
     }
 });
 
+router.get('/wikipedia', async(req, res, next) => {
+  const text = req.query.texto;
+  const apikey = req.query.apikey;
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+  wikiSearch(text).then((data) => {
+      res.json({
+    status: true,
+	creator: `${creator}`,
+	resultado: data[0].wiki
+      })
+    })
+    .catch((error) => {
+      res.json(error)
+    });
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
 router.get('/tiktok', async(req, res, next) => {
   var apikey = req.query.apikey;
    var url = req.query.url;  
