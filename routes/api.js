@@ -6,25 +6,22 @@ var db = require(__path + '/database/db');
 try {
 var kuhong = db.get('ojan');
 } catch (e) {
-	console.log('Bem vindo ao SupraApi!') 
+	console.log('Bem vindo ao anya-api!') 
 }
 
-var criador = `SupraOfc`
-var key = 'SupraOfc' 
+var criador = `AloneOfc`
+var key = 'AloneOfc' 
 
-//*** APIKEY USADA PARA GRAVAR VIDEO EM BREVE TERÁ QUE COMPRAR UMA. APENAS 40 REAIS***//
-var chaveapi = 'SupraOfc'
+var chaveapi = 'niel'
 
-
-//*** chaves dessa api ****//
-
-const listkey = ["escritos"];
+const listkey = ["nielzinxyz"];
 
 //*****//
 var fs = require('fs');
 var FormData = require('form-data');
 var fetch = require('node-fetch');
 var util = require('util');
+const alip = require("../lib/listdl")
 var router  = express.Router();
 
 
@@ -67,6 +64,25 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 }        	    	 	
 })
 
+router.get('/pencil', async(req, res, next) => {
+  var text1 = req.query.texto;
+  const apikey = req.query.apikey;
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+  alip.textpro("https://textpro.me/create-blackpink-logo-style-online-1001.html", [text1])
+    .then((result) => {
+      res.json({
+       res.set({'Content-Type': 'image/png'})
+       res.send(result)
+      })
+    })
+    .catch((error) => {
+      res.json(error)
+    });
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
 
 router.get('/tiktok', async(req, res, next) => {
   var apikey = req.query.apikey;
@@ -101,7 +117,28 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/tiktok?url=${url}&apikey=${cha
 	res.sendFile(__path + '/views/key.html')
 }        	    	 	
 })
-
+router.get('/soundcloud', async(req, res, next) => {
+  const url = req.query.url;
+  const apikey = req.query.apikey;
+  if(!url) return res.json(loghandler.noturl)
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+  alip.soundcloud(url)
+    .then((result) => {
+      res.json({
+        status: true,
+        code: 200,
+        criador: `${criador}`,
+        result
+      })
+    })
+    .catch((error) => {
+      res.json(error)
+    });
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
 
 router.get('/xnxx', async(req, res, next) => {
   var apikey = req.query.apikey;
