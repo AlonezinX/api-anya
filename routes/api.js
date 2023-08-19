@@ -26,45 +26,7 @@ var router  = express.Router();
 
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
-
-function parseFileSize(size) {
-    return parseFloat(size) * (/GB/i.test(size)
-        ? 1000000
-        : /MB/i.test(size)
-            ? 1000
-            : /KB/i.test(size)
-                ? 1
-                : /bytes?/i.test(size)
-                    ? 0.001
-                    : /B/i.test(size)
-                        ? 0.1
-                        : 0);
-}
-function styletext(text) {
-    return new Promise((resolve, reject) => {
-        axios.get('http://qaz.wtf/u/convert.cgi?text='+teks)
-        .then(({ data }) => {
-            let $ = cheerio.load(data)
-            let hasil = []
-            $('table > tbody > tr').each(function (a, b) {
-                hasil.push({ name: $(b).find('td:nth-child(1) > h6 > a').text(), result: $(b).find('td:nth-child(2)').text().trim() })
-            }),
-            resolve(hasil)
-        })
-    })
-}
-const wikiSearch = async (query) => {
-const res = await axios.get(`https://pt.m.wikipedia.org/wiki/${query}`)
-const $ = cheerio.load(res.data)
-const hasil = []
-let wiki = $('#mf-section-0').find('p').text()
-let thumb = $('#mf-section-0').find('div > div > a > img').attr('src')
-thumb = thumb ? thumb : '//pngimg.com/uploads/wikipedia/wikipedia_PNG35.png'
-thumb = 'https:' + thumb
-let titulo = $('h1#section_0').text()
-hasil.push({ wiki, thumb, titulo })
-return hasil
-}
+var { styletext, wikiSearch } = require(__path + '/lib/listdl.js'); 
 
 precisos = {
     digitarapikey: {
@@ -133,9 +95,6 @@ router.get('/styletext', async(req, res, next) => {
 	result: data
       })
     })
-    .catch((error) => {
-      res.json(error)
-    });
     } else {
     	res.sendFile(__path + '/views/key.html')
     }
@@ -153,9 +112,6 @@ router.get('/wikipedia', async(req, res, next) => {
 	resultado: data[0].wiki
       })
     })
-    .catch((error) => {
-      res.json(error)
-    });
     } else {
     	res.sendFile(__path + '/views/key.html')
     }
