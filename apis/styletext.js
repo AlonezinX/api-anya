@@ -35,5 +35,4 @@ hasil.push({ wiki, thumb, titulo })
 return hasil
 }
 
-module.exports.styletext = styletext
-module.exports.wikisearch = wikisearch
+module.exports = { styletext, wikisearch }
