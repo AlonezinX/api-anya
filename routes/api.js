@@ -19,7 +19,6 @@ const listkey = ["nielzinxyz"];
 //*****//
 var fs = require('fs');
 var FormData = require('form-data');
-const { shortText } = require("limit-text-js")
 var fetch = require('node-fetch');
 var util = require('util');
 var cheerio = require('cheerio');
