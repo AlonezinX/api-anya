@@ -21,7 +21,7 @@ var fs = require('fs');
 var FormData = require('form-data');
 var fetch = require('node-fetch');
 var util = require('util');
-const alip = require("../lib/listdl")
+const alip = require("../lib/listdl");
 var router  = express.Router();
 
 
@@ -65,7 +65,7 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 })
 
 router.get('/pencil', async(req, res, next) => {
-  var text1 = req.query.texto;
+  const text1 = req.query.texto;
   const apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
@@ -120,11 +120,9 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/tiktok?url=${url}&apikey=${cha
 router.get('/soundcloud', async(req, res, next) => {
   const url = req.query.url;
   const apikey = req.query.apikey;
-  if(!url) return res.json(loghandler.noturl)
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  alip.soundcloud(url)
-    .then((result) => {
+  alip.soundcloud(url).then((result) => {
       res.json({
         status: true,
         code: 200,
