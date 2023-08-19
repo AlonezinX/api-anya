@@ -64,26 +64,6 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 }        	    	 	
 })
 
-router.get('/pencil', async(req, res, next) => {
-  const text1 = req.query.texto;
-  const apikey = req.query.apikey;
-  if(!apikey) return res.json(precisos.digitarapikey)
-  if(listkey.includes(apikey)){
-  alip.textpro("https://textpro.me/create-blackpink-logo-style-online-1001.html", [text1])
-    .then((result) => {
-      res.json({
-       res.set({'Content-Type': 'image/png'})
-       res.send(result)
-      })
-    })
-    .catch((error) => {
-      res.json(error)
-    });
-    } else {
-    	res.sendFile(__path + '/views/key.html')
-    }
-});
-
 router.get('/tiktok', async(req, res, next) => {
   var apikey = req.query.apikey;
    var url = req.query.url;  
@@ -117,26 +97,6 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/tiktok?url=${url}&apikey=${cha
 	res.sendFile(__path + '/views/key.html')
 }        	    	 	
 })
-router.get('/soundcloud', async(req, res, next) => {
-  const url = req.query.url;
-  const apikey = req.query.apikey;
-  if(!apikey) return res.json(precisos.digitarapikey)
-  if(listkey.includes(apikey)){
-  alip.soundcloud(url).then((result) => {
-      res.json({
-        status: true,
-        code: 200,
-        criador: `${criador}`,
-        result
-      })
-    })
-    .catch((error) => {
-      res.json(error)
-    });
-    } else {
-    	res.sendFile(__path + '/views/key.html')
-    }
-});
 
 router.get('/xnxx', async(req, res, next) => {
   var apikey = req.query.apikey;
