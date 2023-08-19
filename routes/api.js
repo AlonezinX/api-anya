@@ -31,7 +31,7 @@ var { color, bgcolor } = require(__path + '/lib/color.js');
 var { 
 styletext, 
 wikiSearch
-} = require(__path + '../lib/api/apidl.js'); 
+} = require(__path + '/lib/api/apidl'); 
 
 precisos = {
     digitarapikey: {
