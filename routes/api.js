@@ -17,7 +17,6 @@ var chaveapi = 'niel'
 const listkey = ["nielzinxyz"];
 
 //*****//
-const alip = require(__path + "../apis/api/apidl")
 var fs = require('fs');
 var FormData = require('form-data');
 var fetch = require('node-fetch');
@@ -27,8 +26,10 @@ var request = require('request');
 var router  = express.Router();
 
 
+
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
+var { styletext, wikipedia } = require(__path + '/apis/styletext.js');
 
 precisos = {
     digitarapikey: {
