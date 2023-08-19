@@ -36,7 +36,7 @@ function styletext(teks) {
     })
 }
 
-function wikiSearch(query) = {
+function wikiSearch(query) {
 const res = await axios.get(`https://pt.m.wikipedia.org/wiki/${query}`)
 const $ = cheerio.load(res.data)
 const hasil = []
@@ -50,4 +50,4 @@ return hasil
 }
 
 module.exports.styletext = styletext
-module.exports.wikiSearch + wikiSearch
+module.exports.wikiSearch = wikiSearch
