@@ -28,7 +28,7 @@ var router  = express.Router();
 
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
-const alip = require("../lib/listdl")
+
 
 precisos = {
     digitarapikey: {
@@ -37,6 +37,19 @@ precisos = {
     }
 }
 
+function styletext(text) {
+    return new Promise((resolve, reject) => {
+        axios.get('http://qaz.wtf/u/convert.cgi?text='+text)
+        .then(({ data }) => {
+            let $ = cheerio.load(data)
+            let hasil = []
+            $('table > tbody > tr').each(function (a, b) {
+                hasil.push({ name: $(b).find('td:nth-child(1) > h6 > a').text(), result: $(b).find('td:nth-child(2)').text().trim() })
+            }),
+            resolve(hasil)
+        })
+    })
+}
 
 router.get('/playaudio', async(req, res, next) => {
   var apikey = req.query.apikey;
