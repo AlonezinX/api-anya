@@ -17,7 +17,7 @@ var chaveapi = 'niel'
 const listkey = ["nielzinxyz"];
 
 //*****//
-const alip = require("../lib/listdl")
+const alip = require(__path + "/apis/listdl")
 var fs = require('fs');
 var FormData = require('form-data');
 var fetch = require('node-fetch');
