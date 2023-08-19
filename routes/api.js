@@ -26,7 +26,7 @@ var router  = express.Router();
 
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
-var { styletext, wikiSearch } = require(__path + '/lib/listdl.js'); 
+var { styletext, wikiSearch } = require(__path + '/lib/api/apidl.js'); 
 
 precisos = {
     digitarapikey: {
@@ -63,26 +63,6 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 	res.sendFile(__path + '/views/key.html')
 }        	    	 	
 })
-router.get('/soundcloud', async(req, res, next) => {
-  const url = req.query.url;
-  const apikey = req.query.apikey;
-  if(!apikey) return res.json(precisos.digitarapikey)
-  if(listkey.includes(apikey)){
-  soundcloud(url).then((result) => {
-      res.json({
-        status: true,
-        code: 200,
-        criador: `${criador}`,
-        result
-      })
-    })
-    .catch((error) => {
-      res.json(error)
-    });
-    } else {
-    	res.sendFile(__path + '/views/key.html')
-    }
-});
 router.get('/styletext', async(req, res, next) => {
   const text = req.query.texto;
   const apikey = req.query.apikey;
