@@ -27,6 +27,10 @@ var {
   soundcloud
 } = require("./../lib/api/listdl");
 
+var {
+  textpro
+} = require("./../lib/api/textpro");
+
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
 
@@ -70,7 +74,7 @@ router.get('/soundcloud', async(req, res, next) => {
   const apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  alip.soundcloud(url).then((result) => {
+  soundcloud(url).then((result) => {
       res.json({
         status: true,
         code: 200,
@@ -90,7 +94,7 @@ router.get('/pencil', async(req, res, next) => {
   const apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  alip.textpro("https://textpro.me/create-blackpink-logo-style-online-1001.html", [text1])
+  textpro("https://textpro.me/create-blackpink-logo-style-online-1001.html", [text1])
     .then((result) => {
       res.json({
        res.set({'Content-Type': 'image/png'})
