@@ -1,6 +1,7 @@
 const cheerio = require('cheerio')
 const axios = require('axios')
 const ytdl = require('ytdl-core');
+const { millify } = require("millify")
 
 const lirikLagu = async (query) => {
 const res = await axios.get(`https://www.musixmatch.com/search/${query}`)
