@@ -73,7 +73,7 @@ router.get('/lirik', async(req, res, next) => {
   if(listkey.includes(apikey)){
    lirikLagu(quero)
    .then((res) => {
-      var resultado = res[0].result
+      var resultado = res.result
       res.json({
     status: true,
 	creator: `${criador}`,
@@ -89,13 +89,15 @@ router.get('/covidinfo', async(req, res, next) => {
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
   const c = await covid()
-var { kasus, kematian, sembuh } = c[0]
+      var casos = c[0].kasus;
+      var mortes = c[0].kematian;
+      var curados = c[0].sembuh;
       res.json({
     status: true,
 	creator: `${criador}`,
-	casos: kasus,
-        mortes: kematian,
-	curados: sembuh
+	casos: casos,
+        mortes: mortes,
+	curados: curados
       })
     } else {
     	res.sendFile(__path + '/views/key.html')
