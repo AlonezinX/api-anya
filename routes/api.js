@@ -29,7 +29,7 @@ var router  = express.Router();
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { styletext } = require(__path + '/apis/styletext.js');
-var { lirikLagu, covid, wikiSearch } = require('../apis/lirik.js');
+var { lirikLagu, covid, wikiSearch, ytMp3, ytMp4 } = require('../apis/lirik.js');
 
 precisos = {
     digitarapikey: {
