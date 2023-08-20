@@ -29,7 +29,7 @@ var router  = express.Router();
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { styletext } = require(__path + '/apis/styletext.js');
-var { lirikLagu, covid } = require('../apis/lirik.js');
+var { lirikLagu, covid, wikiSearch } = require('../apis/lirik.js');
 
 precisos = {
     digitarapikey: {
@@ -76,7 +76,23 @@ router.get('/lirik', async(req, res, next) => {
       res.json({
     status: true,
 	creator: `${criador}`,
-	result: resultado
+	resultado: resultado
+      })
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
+router.get('/wikipedia', async(req, res, next) => {
+  var text = req.query.texto;
+  var apikey = req.query.apikey;
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+   const c = await wikiSearch(text)
+      var resultado = c[0].wiki
+      res.json({
+    status: true,
+	creator: `${criador}`,
+	resultado: resultado
       })
     } else {
     	res.sendFile(__path + '/views/key.html')
