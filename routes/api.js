@@ -28,7 +28,6 @@ var router  = express.Router();
 
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
-var { styletext, wikiSearch} = require(__path + '/apis/styletext.js');
 
 precisos = {
     digitarapikey: {
