@@ -73,7 +73,7 @@ router.get('/lirik', async(req, res, next) => {
   if(listkey.includes(apikey)){
    lirikLagu(quero)
    .then((res) => {
-      var resultado = res.result
+      var resultado = res[0].result
       res.json({
     status: true,
 	creator: `${criador}`,
@@ -95,9 +95,11 @@ router.get('/covidinfo', async(req, res, next) => {
       res.json({
     status: true,
 	creator: `${criador}`,
+        resultado: {
 	casos: casos,
         mortes: mortes,
 	curados: curados
+	}	
       })
     } else {
     	res.sendFile(__path + '/views/key.html')
