@@ -29,7 +29,7 @@ var router  = express.Router();
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { styletext } = require(__path + '/apis/styletext.js');
-var { lirik, covid } = require('../apis/lirik.js');
+var { lirikLagu, covid } = require('../apis/lirik.js');
 
 precisos = {
     digitarapikey: {
@@ -71,7 +71,7 @@ router.get('/lirik', async(req, res, next) => {
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  lirik(quero)
+   lirikLagu(quero)
    .then((data) => {
       var resultado = data[0].result
       res.json({
