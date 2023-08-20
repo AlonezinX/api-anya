@@ -29,7 +29,7 @@ var router  = express.Router();
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { styletext } = require(__path + '/apis/styletext.js');
-var { lirik } = require('/apis/lirik.js');
+var { lirik } = require('../apis/lirik.js');
 
 precisos = {
     digitarapikey: {
@@ -67,11 +67,12 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 }        	    	 	
 })
 router.get('/lirik', async(req, res, next) => {
-  const text = req.query.texto;
-  const apikey = req.query.apikey;
+  var quero = req.query.texto;
+  var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-  lirik(text).then((data) => {
+  lirik(quero)
+   .then((data) => {
       var resultado = data[0].result
       res.json({
     status: true,
