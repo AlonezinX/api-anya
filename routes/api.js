@@ -88,7 +88,7 @@ router.get('/ytb', async(req, res, next) => {
   var quality = '128kbps';
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
- var { yta } = require('../apis/yt2mate')
+ var { yta } = require('../apis/yt2mate.js')
    let media = await yta(url, quality)
       var titulo = media.title;
       res.json({
