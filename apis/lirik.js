@@ -2,7 +2,6 @@ const cheerio = require('cheerio')
 const axios = require('axios')
 
 function lirikLagu(query) {
-  return new Promise(async(resolve, reject) => {
 const res = await axios.get(`https://www.musixmatch.com/search/${query}`)
 const sup = cheerio.load(res.data)
 const hasil = []
@@ -17,11 +16,9 @@ const result = soup('#site').find('.mxm-lyrics__content > .lyrics__content__ok')
 
 hasil.push({ result})
 return hasil
-  })
 }
 
 function covid() {
-  return new Promise(async(resolve, reject) => {
 const res = await axios.get(`https://www.worldometers.info/coronavirus/country/indonesia/`) 
 const $ = cheerio.load(res.data)
 hasil = []
@@ -31,7 +28,6 @@ kematian = $(a).find('div > span').eq(1).text()
 sembuh = $(a).find('div > span').eq(2).text() 
 hasil.push({ kasus, kematian, sembuh}) 
 return hasil
-  })
 }
 
 module.exports = { lirikLagu, covid }
