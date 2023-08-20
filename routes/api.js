@@ -82,6 +82,24 @@ router.get('/lirik', async(req, res, next) => {
     	res.sendFile(__path + '/views/key.html')
     }
 });
+router.get('/ytb', async(req, res, next) => {
+  var url = req.query.link;
+  var apikey = req.query.apikey;
+  var quality = '128kbps';
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+ var { yta } = require('../apis/yt2mate')
+   let media = await yta(url, quality)
+      var titulo = media.title;
+      res.json({
+    status: true,
+	creator: `${criador}`,
+	resultado: titulo
+      })
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
 router.get('/wikipedia', async(req, res, next) => {
   var text = req.query.texto;
   var apikey = req.query.apikey;
@@ -98,7 +116,7 @@ router.get('/wikipedia', async(req, res, next) => {
     	res.sendFile(__path + '/views/key.html')
     }
 });
-router.get('/ytb', async(req, res, next) => {
+router.get('/ytbb', async(req, res, next) => {
   var url = req.query.link;
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
