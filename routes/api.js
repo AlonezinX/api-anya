@@ -116,38 +116,21 @@ router.get('/wikipedia', async(req, res, next) => {
     	res.sendFile(__path + '/views/key.html')
     }
 });
-router.get('/ytbb', async(req, res, next) => {
-  var link = req.query.link;
+router.get('/styletext', async(req, res, next) => {
+  var text = req.query.texto;
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-   const c = await ytMp3(link)
-	var titulo = c[0].title;
-	var desc = c[0].desc;
-	var thumb = c[0].thumb;
-	var views = c[0].views;
-	var canal = c[0].channel;
-	var uploadDate = c[0].uploadDate;
-	var result = c[0].result;
-	var tamanho = c[0].size;
-	var qualidade = c[0].quality;
+   styletext(text).then(data => {	  
+   var style = data;
       res.json({
     status: true,
 	creator: `${criador}`,
 	result:{ 
-			title: titulo,
-			desc: desc,
-			thumb: thumb,
-			views: views,
-			channel: canal,
-			uploadDate: uploadDate,
-			mp4:{
-				result: result,
-				size: tamanho,
-				quality: qualidade
-			}
+        resultado: style
 		 }
       })
+   })
     } else {
     	res.sendFile(__path + '/views/key.html')
     }
