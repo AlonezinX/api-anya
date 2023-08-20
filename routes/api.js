@@ -105,24 +105,35 @@ router.get('/ytb', async(req, res, next) => {
   if(listkey.includes(apikey)){
    var mp3 = await ytMp3(url)
 	var mp4 = await ytMp4(url)
+	var titulo = mp4.title;
+	var desc = mp4.desc;
+	var thumb = mp4.thumb;
+	var views = mp4.views;
+	var canal = mp4.channel;
+	var uploadDate = mp4.uploadDate;
+	var result = mp4.result;
+	var tamanho = mp4.size;
+	var qualidade = mp4.quality;
+	var result2 = mp3.result;
+	var tamanho2 = mp3.size;
       res.json({
     status: true,
 	creator: `${criador}`,
 	result:{ 
-			title: mp4.title,
-			desc: mp4.desc,
-			thum: mp4.thumb,
-			view: mp4.views,
-			channel: mp4.channel,
-			uploadDate: mp4.uploadDate,
+			title: titulo,
+			desc: desc,
+			thumb: thumb,
+			views: views,
+			channel: canal,
+			uploadDate: uploadDate,
 			mp4:{
-				result: mp4.result,
-				size: mp4.size,
-				quality: mp4.quality
+				result: result,
+				size: tamanho,
+				quality: qualidade
 			},
 			mp3:{
-				result: mp3.result,
-				size: mp3.size
+				result: result2,
+				size: tamanho2
 			}
 		 }
       })
