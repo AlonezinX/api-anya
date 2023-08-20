@@ -22,7 +22,8 @@ function styletext(teks) {
     })
 }
 
-function wikisearch(query) {
+const wikiSearch = async (query) => {
+return new Promise((resolve, reject) => {
 const res = await axios.get(`https://pt.m.wikipedia.org/wiki/${query}`)
 const $ = cheerio.load(res.data)
 const hasil = []
@@ -33,6 +34,7 @@ thumb = 'https:' + thumb
 let titulo = $('h1#section_0').text()
 hasil.push({ wiki, thumb, titulo })
 return hasil
+        })
 }
 
-module.exports = { styletext, wikisearch }
+module.exports = { styletext, wikiSearch }
