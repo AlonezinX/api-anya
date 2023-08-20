@@ -66,7 +66,23 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 	res.sendFile(__path + '/views/key.html')
 }        	    	 	
 })
-
+router.get('/lirik', async(req, res, next) => {
+  const text = req.query.texto;
+  const apikey = req.query.apikey;
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+  lirik(text).then((data) => {
+      var resultado = data[0].result
+      res.json({
+    status: true,
+	creator: `${criador}`,
+	result: resultado
+      })
+    })
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
 router.get('/tiktok', async(req, res, next) => {
   var apikey = req.query.apikey;
    var url = req.query.url;  
