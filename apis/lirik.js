@@ -3,6 +3,17 @@ const axios = require('axios')
 const ytdl = require('ytdl-core');
 const { millify } = require("millify")
 
+function bytesToSize(bytes) {
+    return new Promise((resolve, reject) => {
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        if (bytes === 0) return 'n/a';
+        const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+        if (i === 0) resolve(`${bytes} ${sizes[i]}`);
+        resolve(`${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`);
+    });
+  };
+
+
 const lirikLagu = async (query) => {
 const res = await axios.get(`https://www.musixmatch.com/search/${query}`)
 const sup = cheerio.load(res.data)
