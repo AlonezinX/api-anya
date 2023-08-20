@@ -29,7 +29,7 @@ var router  = express.Router();
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { styletext } = require(__path + '/apis/styletext.js');
-var { lirik } = require('../apis/lirik.js');
+var { lirik, covid } = require('../apis/lirik.js');
 
 precisos = {
     digitarapikey: {
@@ -78,6 +78,25 @@ router.get('/lirik', async(req, res, next) => {
     status: true,
 	creator: `${criador}`,
 	result: resultado
+      })
+    })
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
+router.get('/covidinfo', async(req, res, next) => {
+  var apikey = req.query.apikey;
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+  const c = await covid()
+   .then((data) => {
+var { kasus, kematian, sembuh } = c[0]
+      res.json({
+    status: true,
+	creator: `${criador}`,
+	casos: kasus,
+        mortes: kematian,
+	curados: sembuh
       })
     })
     } else {
