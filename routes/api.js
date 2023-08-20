@@ -67,19 +67,17 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 }        	    	 	
 })
 router.get('/lirik', async(req, res, next) => {
-  var quero = req.query.texto;
+  var text = req.query.texto;
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-   lirikLagu(quero)
-   .then((res) => {
-      var resultado = res[0].result
+   const c = await lirikLagu(text)
+      var resultado = c[0].result
       res.json({
     status: true,
 	creator: `${criador}`,
 	result: resultado
       })
-    })
     } else {
     	res.sendFile(__path + '/views/key.html')
     }
