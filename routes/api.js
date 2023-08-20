@@ -122,15 +122,15 @@ router.get('/ytbb', async(req, res, next) => {
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
    const c = await ytMp4(url)
-	var titulo = c.title;
-	var desc = c.desc;
-	var thumb = c.thumb;
-	var views = c.views;
-	var canal = c.channel;
-	var uploadDate = c.uploadDate;
-	var result = c.result;
-	var tamanho = c.size;
-	var qualidade = c.quality;
+	var titulo = c[0].title;
+	var desc = c[0].desc;
+	var thumb = c[0].thumb;
+	var views = c[0].views;
+	var canal = c[0].channel;
+	var uploadDate = c[0].uploadDate;
+	var result = c[0].result;
+	var tamanho = c[0].size;
+	var qualidade = c[0].quality;
       res.json({
     status: true,
 	creator: `${criador}`,
