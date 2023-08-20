@@ -44,8 +44,7 @@ hasil.push({ wiki, thumb, titulo })
 return hasil
   }
 
-function ytMp4(url) {
-    return new Promise((async(resolve, reject) => {
+const ytMp4 = async (url) => {
         ytdl.getInfo(url).then(async(getUrl) => {
             let result = [];
             for(let i = 0; i < getUrl.formats.length; i++) {
@@ -83,11 +82,9 @@ function ytMp4(url) {
         }).catch(err => {
           resolve()
       })
-    }));
 };
 
-function ytMp3(url) {
-    return new Promise((resolve, reject) => {
+const ytMp3 = async (url) => {
         ytdl.getInfo(url).then(async(getUrl) => {
             let result = [];
             for(let i = 0; i < getUrl.formats.length; i++) {
@@ -123,7 +120,6 @@ function ytMp3(url) {
           }).catch(err => {
             resolve()
         })
-    });
           }
 
 module.exports = { lirikLagu, covid, wikiSearch, ytMp3, ytMp4 }
