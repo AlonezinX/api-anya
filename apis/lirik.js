@@ -1,7 +1,8 @@
 const cheerio = require('cheerio')
 const axios = require('axios')
 
-const lirikLagu = async (query) => {
+function lirikLagu(query) {
+  return new Promise(async(resolve, reject) => {
 const res = await axios.get(`https://www.musixmatch.com/search/${query}`)
 const sup = cheerio.load(res.data)
 const hasil = []
@@ -16,6 +17,7 @@ const result = soup('#site').find('.mxm-lyrics__content > .lyrics__content__ok')
 
 hasil.push({ result})
 return hasil
+  })
 }
 
 module.exports = { lirikLagu }
