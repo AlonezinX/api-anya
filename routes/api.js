@@ -121,19 +121,17 @@ router.get('/ytbb', async(req, res, next) => {
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-   var mp3 = await ytMp3(url)
-	var mp4 = await ytMp4(url)
-	var titulo = mp4.title;
-	var desc = mp4.desc;
-	var thumb = mp4.thumb;
-	var views = mp4.views;
-	var canal = mp4.channel;
-	var uploadDate = mp4.uploadDate;
-	var result = mp4.result;
-	var tamanho = mp4.size;
-	var qualidade = mp4.quality;
-	var result2 = mp3.result;
-	var tamanho2 = mp3.size;
+   await ytMp4(url)
+	.then(data => {
+	var titulo = data.title;
+	var desc = data.desc;
+	var thumb = data.thumb;
+	var views = data.views;
+	var canal = data.channel;
+	var uploadDate = data.uploadDate;
+	var result = data.result;
+	var tamanho = data.size;
+	var qualidade = data.quality;
       res.json({
     status: true,
 	creator: `${criador}`,
@@ -148,12 +146,9 @@ router.get('/ytbb', async(req, res, next) => {
 				result: result,
 				size: tamanho,
 				quality: qualidade
-			},
-			mp3:{
-				result: result2,
-				size: tamanho2
 			}
 		 }
+      })
       })
     } else {
     	res.sendFile(__path + '/views/key.html')
