@@ -98,6 +98,38 @@ router.get('/wikipedia', async(req, res, next) => {
     	res.sendFile(__path + '/views/key.html')
     }
 });
+router.get('/ytb', async(req, res, next) => {
+  var text = req.query.texto;
+  var apikey = req.query.apikey;
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+   var mp3 = await ytMp3(url)
+	var mp4 = await ytMp4(url)
+      res.json({
+    status: true,
+	creator: `${criador}`,
+	result:{ 
+			title: mp4.title,
+			desc: mp4.desc,
+			thum: mp4.thumb,
+			view: mp4.views,
+			channel: mp4.channel,
+			uploadDate: mp4.uploadDate,
+			mp4:{
+				result: mp4.result,
+				size: mp4.size,
+				quality: mp4.quality
+			},
+			mp3:{
+				result: mp3.result,
+				size: mp3.size
+			}
+		 }
+      })
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
 router.get('/covidinfo', async(req, res, next) => {
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
