@@ -30,7 +30,7 @@ var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { styletext } = require(__path + '/apis/styletext.js');
 var { lirikLagu, covid, wikiSearch, ytMp3, ytMp4 } = require('../apis/lirik.js');
-var { conselhos } = require('../apis/frases.js');
+var { conselhos, cantadas } = require('../apis/frases.js');
 
 precisos = {
     digitarapikey: {
@@ -92,6 +92,20 @@ router.get('/conselhoo', async(req, res, next) => {
     status: true,
 	creator: `${criador}`,
 	resultado: conselho
+      })
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
+router.get('/cantadas', async(req, res, next) => {
+  var apikey = req.query.apikey;
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+   var cantada = cantadas[Math.floor(Math.random() * cantadas.length)]
+      res.json({
+    status: true,
+	creator: `${criador}`,
+	resultado: cantada
       })
     } else {
     	res.sendFile(__path + '/views/key.html')
@@ -293,63 +307,6 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/saycat?apikey=${chaveapi}`))
              res.json({
                  criador : `${criador}`,
                  resultado              
-             })      
-             })
-            } else {
-	res.sendFile(__path + '/views/key.html')
-}        	    	 	
-})
-
-
-router.get('/conselho', async(req, res, next) => {
-  var apikey = req.query.apikey;
-  if(!apikey) return res.json(precisos.digitarapikey)
-  if(listkey.includes(apikey)){
-fetch(encodeURI(`https://supraz.herokuapp.com/api/conselho?apikey=${chaveapi}`))
-        .then(response => response.json())
-        .then(dataf => {
-        var frase = dataf.frase;
-             res.json({
-                 criador : `${criador}`,
-                 frase           
-             })      
-             })
-            } else {
-	res.sendFile(__path + '/views/key.html')
-}        	    	 	
-})
-
-router.get('/cantadas', async(req, res, next) => {
-  var apikey = req.query.apikey;
-  if(!apikey) return res.json(precisos.digitarapikey)
-  if(listkey.includes(apikey)){
-fetch(encodeURI(`https://supraz.herokuapp.com/api/cantadas18?apikey=${chaveapi}`))
-        .then(response => response.json())
-        .then(dataf => {
-        var frase = dataf.frase;
-             res.json({
-                 criador : `${criador}`,
-                 frase           
-             })      
-             })
-            } else {
-	res.sendFile(__path + '/views/key.html')
-}        	    	 	
-})
-
-router.get('/metadinha', async(req, res, next) => {
-  var apikey = req.query.apikey;
-  if(!apikey) return res.json(precisos.digitarapikey)
-  if(listkey.includes(apikey)){
-fetch(encodeURI(`https://supraz.herokuapp.com/api/metadinha?apikey=${chaveapi}`))
-        .then(response => response.json())
-        .then(dataf => {
-        var garoto = dataf.garoto;
-        var garota = dataf.garota;
-             res.json({
-                 criador : `${criador}`,
-                 garoto,
-                 garota         
              })      
              })
             } else {
