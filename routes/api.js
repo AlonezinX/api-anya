@@ -99,7 +99,7 @@ router.get('/wikipedia', async(req, res, next) => {
     }
 });
 router.get('/ytb', async(req, res, next) => {
-  var text = req.query.texto;
+  var url = req.query.link;
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
