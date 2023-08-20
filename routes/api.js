@@ -30,6 +30,7 @@ var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { styletext } = require(__path + '/apis/styletext.js');
 var { lirikLagu, covid, wikiSearch, ytMp3, ytMp4 } = require('../apis/lirik.js');
+var { conselhos } = require('../apis/frases.js');
 
 precisos = {
     digitarapikey: {
@@ -77,6 +78,20 @@ router.get('/lirik', async(req, res, next) => {
     status: true,
 	creator: `${criador}`,
 	resultado: resultado
+      })
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
+router.get('/conselhoo', async(req, res, next) => {
+  var apikey = req.query.apikey;
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+   var conselho = conselhos[Math.floor(Math.random() * conselhos.length)]
+      res.json({
+    status: true,
+	creator: `${criador}`,
+	resultado: conselho
       })
     } else {
     	res.sendFile(__path + '/views/key.html')
