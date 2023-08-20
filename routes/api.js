@@ -117,11 +117,11 @@ router.get('/wikipedia', async(req, res, next) => {
     }
 });
 router.get('/ytbb', async(req, res, next) => {
-  var url = req.query.link;
+  var link = req.query.link;
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-   const c = await ytMp4(url)
+   const c = await ytMp3(link)
 	var titulo = c[0].title;
 	var desc = c[0].desc;
 	var thumb = c[0].thumb;
