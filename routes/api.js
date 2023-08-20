@@ -65,23 +65,6 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 	res.sendFile(__path + '/views/key.html')
 }        	    	 	
 })
-router.get('/styletext', async(req, res, next) => {
-  const texto1 = req.query.texto;
-  const apikey = req.query.apikey;
-  if(!apikey) return res.json(precisos.digitarapikey)
-  if(listkey.includes(apikey)){
-  styletext(texto1).then((data) => {
- var result = data;
-      res.json({
-    status: true,
-	creator: `${creator}`,
-	result: result
-      })
-    })
-    } else {
-    	res.sendFile(__path + '/views/key.html')
-    }
-});
 
 router.get('/tiktok', async(req, res, next) => {
   var apikey = req.query.apikey;
