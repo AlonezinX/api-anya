@@ -29,7 +29,7 @@ var router  = express.Router();
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { styletext } = require(__path + '/apis/styletext.js');
-var { lirikLagu, covid, wikiSearch, ytMp3, ytMp4, mediafireDl } = require('../apis/lirik.js');
+var { lirikLagu, covid, wikiSearch, ytMp3, ytMp4, mediafiredl } = require('../apis/lirik.js');
 var { conselhos, cantadas } = require('../apis/frases.js');
 
 precisos = {
@@ -101,15 +101,13 @@ router.get('/mediafire', async(req, res, next) => {
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-   mediafireDl(url).then(data => {	
-      var nome = data[0].nama;
-      var peso = data[0].size;
+   mediafiredl(url).then(data => {	
+      var resultado = data;
       
       res.json({
     status: true,
 	creator: `${criador}`,
-	nome: nome,
-	tamanho: peso
+	resultado: resultado
       })
    })
     } else {
