@@ -39,6 +39,16 @@ precisos = {
     }
 }
 
+router.get('/cekapikey', async(req, res, next) => {
+  const apikey = req.query.apikey;
+  if(!apikey) return res.json(loghandler.notparam)
+    res.json({
+      status: 'active',
+      criador: `${criador}`,
+      apikey: `${apikey}`,
+      message: 'APIKEY ESTA ATIVA'
+    })
+})
 
 router.get('/playaudio', async(req, res, next) => {
   var apikey = req.query.apikey;
