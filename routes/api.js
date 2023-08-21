@@ -40,9 +40,9 @@ precisos = {
 }
 
 router.get('/cekapikey', async(req, res, next) => {
-  const apikey = req.query.apikey;
+  const key = req.query.apikey;
   if(!apikey) return res.json(loghandler.notparam) 
-   if (apikey === listkey) {
+   if (key === listkey) {
     res.json({
       status: 'ativa',
       criador: `${criador}`,
