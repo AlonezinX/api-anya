@@ -132,18 +132,38 @@ const ytMp3 = async (url) => {
         })
           }
 
-const mediafireDl = async (url) => {
-const res = await axios.get(url) 
-const $ = cheerio.load(res.data)
-const hasil = []
-const link = $('a#downloadButton').attr('href')
-const size = $('a#downloadButton').text().replace('Download', '').replace('(', '').replace(')', '').replace('\n', '').replace('\n', '').replace('                         ', '')
-const seplit = link.split('/')
-const nama = seplit[5]
-mime = nama.split('.')
-mime = mime[1]
-hasil.push({ nama, mime, size, link })
-return hasil
+function mediafiredl(url) {
+		var a, b;
+		if (!/https?:\/\/(www\.)?mediafire\.com/.test(url)) return resolve()
+	   const data = await axios.get(url).catch(function (error) {})
+	   if (!data) {
+		resolve()
+	   } else {
+		const $ = cheerio.load(data.data);
+		const Url = ($('#downloadButton').attr('href') || '').trim();
+		const url2 = ($('#download_link > a.retry').attr('href') || '').trim();
+		const $intro = $('div.dl-info > div.intro');
+		const filename = $intro.find('div.filename').text().trim();
+		const filetype = $intro.find('div.filetype > span').eq(0).text().trim();
+		const ext = ((b = (a = /\(\.(.*?)\)/.exec($intro.find('div.filetype > span').eq(1).text())) === null || a === void 0 ? void 0 : a[1]) === null || b === void 0 ? void 0 : b.trim()) || 'bin';
+		const $li = $('div.dl-info > ul.details > li');
+		const aploud = $li.eq(1).find('span').text().trim();
+		const filesizeH = $li.eq(0).find('span').text().trim();
+		const filesize = (0, parseFileSize)(filesizeH);
+		const result = {
+			url: Url || url2,
+			url2,
+			filename,
+			filetype,
+			ext,
+			upload_date: aploud,
+			filesizeH,
+			filesize
+		};
+		resolve(result)
+	   }
+	 
+		
 }
 
-module.exports = { lirikLagu, covid, wikiSearch, ytMp3, ytMp4, mediafireDl }
+module.exports = { lirikLagu, covid, wikiSearch, ytMp3, ytMp4, mediafiredl }
