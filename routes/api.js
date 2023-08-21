@@ -101,7 +101,7 @@ router.get('/mediafire', async(req, res, next) => {
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-   const c = await mediafireDl(url)
+   const resm = await mediafireDl(url)
       var nome = resm[0].nama;
       var peso = resm[0].size;
       var down = resm[0].link;
