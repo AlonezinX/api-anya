@@ -41,13 +41,22 @@ precisos = {
 
 router.get('/cekapikey', async(req, res, next) => {
   const apikey = req.query.apikey;
-  if(!apikey) return res.json(loghandler.notparam)
+  if(!apikey) return res.json(loghandler.notparam) 
+   if (apikey === listkey) {
     res.json({
-      status: 'active',
+      status: 'ativa',
       criador: `${criador}`,
       apikey: `${apikey}`,
       message: 'APIKEY ESTA ATIVA'
     })
+   } else {
+res.json({
+      status: 'falso',
+      criador: `${criador}`,
+      apikey: `${apikey}`,
+      message: 'APIKEY ACIMA NÃO EXISTE'
+    })	   
+   }
 })
 
 router.get('/playaudio', async(req, res, next) => {
