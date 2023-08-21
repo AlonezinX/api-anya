@@ -39,25 +39,18 @@ precisos = {
     }
 }
 
-router.get('/cekapikey', async(req, res, next) => {
+router.post("/cekapikey", async (req, res, next) => {
   const key = req.query.apikey;
-  if(!apikey) return res.json(loghandler.notparam) 
-   if (key === listkey) {
+  if(listkey.includes(key)) {
     res.json({
-      status: 'ativa',
-      criador: `${criador}`,
-      apikey: `${apikey}`,
-      message: 'APIKEY ESTA ATIVA'
-    })
-   } else {
-res.json({
-      status: 'falso',
-      criador: `${criador}`,
-      apikey: `${apikey}`,
-      message: 'APIKEY ACIMA NÃO EXISTE'
-    })	   
-   }
-})
+      message: 'apikey já está ativa'
+    });
+  } else {
+    res.json({
+      message: `apikey não existe`
+    });
+  }
+});
 
 router.get('/playaudio', async(req, res, next) => {
   var apikey = req.query.apikey;
