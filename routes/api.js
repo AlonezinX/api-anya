@@ -11,9 +11,7 @@ var kuhong = db.get('alone');
 
 var criador = `AloneOfc`
 var key = 'AloneOfc' 
-
 var chaveapi = 'niel'
-
 const listkey = ["nielzinxyz", "niel"];
 
 //*****//
@@ -103,7 +101,6 @@ router.get('/mediafire', async(req, res, next) => {
   if(listkey.includes(apikey)){
    mediafiredl(url).then(data => {	
       var resultado = data;
-      
       res.json({
     status: true,
 	creator: `${criador}`,
