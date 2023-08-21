@@ -99,12 +99,13 @@ router.get('/mediafire', async(req, res, next) => {
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-   mediafiredl(url).then(data => {	
-      var resultado = data;
+   mediafiredl(url)
+.then(data => {	
+      var result = data;
       res.json({
-    status: true,
+        status: true,
 	creator: `${criador}`,
-	resultado: resultado
+	resultado: result
       })
    })
     } else {
