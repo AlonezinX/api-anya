@@ -101,21 +101,17 @@ router.get('/mediafire', async(req, res, next) => {
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
-   const resm = await mediafireDl(url)
-      var nome = resm[0].nama;
-      var peso = resm[0].size;
-      var down = resm[0].link;
-      var mime = resm[0].mime;
+   mediafireDl(url).then(data => {	
+      var nome = data[0].nama;
+      var peso = data[0].size;
+      
       res.json({
     status: true,
 	creator: `${criador}`,
-	resultado: {
 	nome: nome,
-	tamanho: peso,
-	url: down,
-	mimetype: mime
-	}
+	tamanho: peso
       })
+   })
     } else {
     	res.sendFile(__path + '/views/key.html')
     }
