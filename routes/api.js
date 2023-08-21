@@ -39,7 +39,7 @@ precisos = {
     }
 }
 
-router.post("/cekapikey", async (req, res, next) => {
+router.post("/api/cekapikey", async (req, res, next) => {
   const key = req.query.apikey;
   if(listkey.includes(key)) {
     res.json({
