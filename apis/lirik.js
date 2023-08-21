@@ -1,4 +1,4 @@
-const cheerio = require('cheerio')
+q1const cheerio = require('cheerio')
 const axios = require('axios')
 const ytdl = require('ytdl-core');
 const { millify } = require("millify")
@@ -133,6 +133,7 @@ const ytMp3 = async (url) => {
           }
 
 function mediafiredl(url) {
+    return new Promise(async(resolve, reject) => {
 		var a, b;
 		if (!/https?:\/\/(www\.)?mediafire\.com/.test(url)) return resolve()
 	   const data = await axios.get(url).catch(function (error) {})
@@ -163,7 +164,7 @@ function mediafiredl(url) {
 		resolve(result)
 	   }
 	 
-		
+		})
 }
 
 module.exports = { lirikLagu, covid, wikiSearch, ytMp3, ytMp4, mediafiredl }
