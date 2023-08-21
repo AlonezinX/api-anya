@@ -29,7 +29,7 @@ var router  = express.Router();
 var { spawn, exec } = require('child_process');
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { styletext } = require(__path + '/apis/styletext.js');
-var { lirikLagu, covid, wikiSearch, ytMp3, ytMp4 } = require('../apis/lirik.js');
+var { lirikLagu, covid, wikiSearch, ytMp3, ytMp4, mediafireDl } = require('../apis/lirik.js');
 var { conselhos, cantadas } = require('../apis/frases.js');
 
 precisos = {
@@ -85,7 +85,7 @@ router.get('/lirik', async(req, res, next) => {
   if(!apikey) return res.json(precisos.digitarapikey)
   if(listkey.includes(apikey)){
    const c = await lirikLagu(text)
-      var resultado = c[0].result
+   var resultado = c[0].result;
       res.json({
     status: true,
 	creator: `${criador}`,
@@ -95,6 +95,32 @@ router.get('/lirik', async(req, res, next) => {
     	res.sendFile(__path + '/views/key.html')
     }
 });
+
+router.get('/mediafire', async(req, res, next) => {
+  var url = req.query.link;
+  var apikey = req.query.apikey;
+  if(!apikey) return res.json(precisos.digitarapikey)
+  if(listkey.includes(apikey)){
+   const c = await mediafireDl(url)
+      var nome = resm[0].nama;
+      var peso = resm[0].size;
+      var down = resm[0].link;
+      var mime = resm[0].mime;
+      res.json({
+    status: true,
+	creator: `${criador}`,
+	resultado: {
+	nome: nome,
+	tamanho: peso,
+	url: down,
+	mimetype: mime
+	}
+      })
+    } else {
+    	res.sendFile(__path + '/views/key.html')
+    }
+});
+
 router.get('/conselhoo', async(req, res, next) => {
   var apikey = req.query.apikey;
   if(!apikey) return res.json(precisos.digitarapikey)
