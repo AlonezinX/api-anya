@@ -1,4 +1,4 @@
-q1const cheerio = require('cheerio')
+const cheerio = require('cheerio')
 const axios = require('axios')
 const ytdl = require('ytdl-core');
 const { millify } = require("millify")
