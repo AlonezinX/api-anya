@@ -77,6 +77,105 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 	res.sendFile(__path + '/views/key.html')
 }        	    	 	
 })
+router.get('/cep2', async (req, res, next) => {
+         quero = req.query.quero
+        var Apikey = req.query.apikey;
+if(!Apikey) return res.json(loghandler.notparam)
+	if(listkey.includes(Apikey)){          
+       fetch(encodeURI(`https://viacep.com.br/ws/${quero}/json/`))
+        .then(response => response.json())
+        .then(data => {
+         var cep = data.cep;
+         var logradouro = data.logradouro;
+         var bairro = data.bairro;
+         var localidade = data.localidade; 
+         var uf = data.uf;
+         var ddd = data.ddd;
+         var ibge = data.ibge;
+             res.json({
+                 Status: 200,
+                 criador : `${criador}`,
+                 cep,
+                 logradouro,
+                 bairro,
+                 localidade,
+                 uf,
+                 ddd,
+                 ibge
+             })
+         })
+          } else {
+res.sendFile(__path + '/views/key.html')
+}        	    	 		
+})
+router.get('/covid', async (req, res, next) => {
+         sigla = req.query.sigla
+        var Apikey = req.query.apikey;
+if(!Apikey) return res.json(loghandler.notparam)
+	if(listkey.includes(Apikey)){          
+
+       fetch(encodeURI(`https://covid19-brazil-api.vercel.app/api/report/v1/brazil/uf/${sigla}`))
+        .then(response => response.json())
+        .then(data => {
+        var uid = data.uid;
+        var uf = data.uf;
+        var estado = data.state;
+        var casos = data.cases;
+        var mortes = data.deaths;
+        var suspeitos = data.suspects;
+             res.json({
+                 criador : `${criador}`,
+                 uid,
+                 uf,
+                 estado, 
+                 casos, 
+                 suspeitos,                                
+             })
+         })
+     } else {
+res.sendFile(__path + '/views/key.html')
+}        	    	 		
+})
+router.get('/cnpj', async(req, res, next) => {
+  const cnpj = req.query.cpnj;
+  const apikey = req.query.apikey;
+  
+  if(!apikey) return res.json(loghandler.notparam)
+  
+  if(listkey.includes(apikey)){
+    fetch(encodeURI(`https://receitaws.com.br/v1/cnpj/{cpnj}`))
+    .then(response => response.json())
+        .then(data => {
+
+        var nome = data.nome;
+         var logradouro = data.logradouro;
+         var numero = data.numero;
+         var municipio = data.municipio;
+          var bairro = data.bairro;
+          var telefone = data.telefone;
+           var cep = data.cep;
+           var cnpj = data.cnpj;
+             res.json({
+                 status : 200,
+                 criador : `${criador}`,
+                 nome,
+                 logradouro,
+                 numero,
+                 municipio,
+                 bairro,
+                 telefone,
+                 cep,
+                 cnpj
+             })
+         })
+         .catch(e => {
+         	res.json(loghandler.error)
+})
+} else {
+  res.sendFile(__path + '/views/key.html')
+}
+})
+
 router.get('/lirik', async(req, res, next) => {
   var text = req.query.texto;
   var apikey = req.query.apikey;
@@ -93,7 +192,6 @@ router.get('/lirik', async(req, res, next) => {
     	res.sendFile(__path + '/views/key.html')
     }
 });
-
 router.get('/mediafire', async(req, res, next) => {
   var url = req.query.link;
   var apikey = req.query.apikey;
