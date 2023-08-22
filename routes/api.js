@@ -78,7 +78,7 @@ fetch(encodeURI(`https://supraz.herokuapp.com/api/playaudio2?quero=${quero}&apik
 }        	    	 	
 })
 router.get('/cep2', async (req, res, next) => {
-         quero = req.query.quero
+        var cep = req.query.cep;
         var Apikey = req.query.apikey;
 if(!Apikey) return res.json(loghandler.notparam)
 	if(listkey.includes(Apikey)){          
